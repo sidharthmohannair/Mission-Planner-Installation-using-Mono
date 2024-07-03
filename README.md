@@ -54,6 +54,44 @@ mono MissionPlanner.exe
 ```
 Mission Planner should now be running.
 
+## Troubleshooting
+
+### Permission Denied When Connecting to Telemetry
+
+If you encounter a "Permission Denied" error when connecting to telemetry, follow these steps:
+
+1. **Add User to Dialout Group**
+   ```sh
+   sudo usermod -aG dialout $USER
+   ```
+    Log out and log back in for the changes to take effect.
+
+2. ***Set Device Permissions***
+
+    ```sh
+    sudo chmod 666 /dev/ttyUSB0
+    ```
+    Replace `/dev/ttyUSB0` with the appropriate device path.
+
+3. ***Run Mono as Superuser***
+
+    If the above steps do not resolve the issue, try running Mono as a superuser:
+
+    ```sh
+    sudo mono MissionPlanner.exe
+    ```
+ 4. ***Create Persistent Udev Rules***
+ 
+    For a more permanent solution, create a udev rule:
+
+    ```sh
+    echo 'SUBSYSTEM=="tty", ATTRS{idVendor}=="[vendor_id]", ATTRS{idProduct}=="[product_id]", MODE="0666"' | sudo tee /etc/udev/rules.d/99-telemetry.rules
+    
+    sudo udevadm control --reload-rules
+    
+    sudo udevadm trigger
+    ```
+    Replace `[vendor_id]` and `[product_id]` with the correct IDs for your telemetry device.
 
 ## Contributing
 
