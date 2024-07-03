@@ -54,6 +54,9 @@ mono MissionPlanner.exe
 ```
 Mission Planner should now be running.
 
+![Mission Planner](./images/missionplanner.png)
+
+
 ## Troubleshooting
 
 ### Permission Denied When Connecting to Telemetry
